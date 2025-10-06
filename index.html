@@ -1,42 +1,142 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jeremy Browne — Engineering Student</title>
   <meta name="description" content="Jeremy Browne — Engineering with Management student at Trinity College Dublin. Design, prototyping, renewable energy, 3D printing and product development." />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jeremy Browne — Engineering Student" />
+    <meta property="og:description" content="Engineering with Management @ Trinity. CAD, 3D printing, renewable energy and product development." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jeremybrowne.github.io/" />
+    <meta property="og:image" content="https://jeremybrowne.github.io/images/og-image.jpg" />
+    <meta property="og:image:alt" content="Jeremy Browne portfolio preview" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jeremy Browne — Engineering Student" />
+    <meta name="twitter:description" content="Engineering with Management @ Trinity. CAD, 3D printing, renewable energy and product development." />
+    <meta name="twitter:image" content="https://jeremybrowne.github.io/images/og-image.jpg" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Google Fonts: Inter for headings/body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" /></noscript>
+
+    <!-- Tailwind config (CDN) - extend colors and fonts -->
+    <script>
+      tailwind = {
+        config: {
+          darkMode: 'class',
+          theme: {
+            extend: {
+              colors: {
+                brand: '#4169E1',
+                'brand-dark': '#1e3a8a'
+              },
+              fontFamily: {
+                heading: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+              }
+            }
+          }
+        }
+      };
+    </script>
   <!-- Tailwind CDN for quick styling -->
   <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS: Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
     /* Small custom styles for the gallery modal */
     .modal-bg { background: rgba(0,0,0,0.75); }
+    /* Typing effect for the animated headline */
+    .typing::after { content: '|'; animation: blink 1s step-start infinite; margin-left: 2px; color: currentColor; }
+    @keyframes blink { 50% { opacity: 0; } }
+    /* Header background transition states */
+    .header-transparent { background: rgba(255,255,255,0.0); backdrop-filter: saturate(120%) blur(6px); }
+    .header-solid { background: rgba(255,255,255,0.9); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+    /* Floating portrait */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float { animation: float 5s ease-in-out infinite; }
+    /* Scroll indicator dot */
+    @keyframes scrollDot {
+      0% { transform: translate(-50%, 0); opacity: 1; }
+      80% { transform: translate(-50%, 14px); opacity: 0; }
+      100% { transform: translate(-50%, 0); opacity: 0; }
+    }
+    .animate-scroll-dot { animation: scrollDot 1.8s ease-in-out infinite; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900 leading-relaxed">
+<body class="bg-gradient-to-br from-indigo-50 via-white to-pink-50 text-gray-900 leading-relaxed font-sans">
   <!-- NAV -->
-  <header class="sticky top-0 bg-white/80 backdrop-blur z-40 shadow-sm">
-    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
-      <a href="#hero" class="text-xl font-semibold">Jeremy Browne</a>
-      <nav class="space-x-4 text-sm">
-        <a href="#about" class="hover:underline">About</a>
-        <a href="#skills" class="hover:underline">Skills</a>
-        <a href="#projects" class="hover:underline">Projects</a>
-        <a href="#experience" class="hover:underline">Experience</a>
-        <a href="#contact" class="hover:underline">Contact</a>
+  <header id="site-header" class="sticky top-0 z-40 transition-colors duration-300 header-transparent dark:bg-gray-900/80">
+    <div class="max-w-6xl mx-auto p-4">
+      <div class="flex items-center justify-between">
+        <a href="#hero" class="text-xl font-semibold">Jeremy Browne</a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex space-x-4 text-sm">
+          <a href="#about" class="hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 rounded">About</a>
+          <a href="#skills" class="hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 rounded">Skills</a>
+          <a href="#projects" class="hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 rounded">Projects</a>
+          <a href="#experience" class="hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 rounded">Experience</a>
+          <a href="#contact" class="hover:text-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 rounded">Contact</a>
       </nav>
+
+        <!-- Mobile hamburger -->
+        <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded hover:bg-black/5 dark:hover:bg-white/5 transition" aria-label="Toggle navigation" aria-expanded="false">
+          <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+          <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hidden"><path d="M18.3 5.71L12 12.01l-6.3-6.3-1.4 1.41 6.3 6.29-6.3 6.3 1.41 1.41 6.29-6.3 6.3 6.3 1.41-1.41-6.3-6.3 6.3-6.29z"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="md:hidden overflow-hidden max-h-0 opacity-0 transition-[max-height,opacity] duration-300 dark:bg-gray-900/70">
+        <nav class="pt-2 pb-3 space-y-2 text-sm">
+          <a href="#about" class="block px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition">About</a>
+          <a href="#skills" class="block px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition">Skills</a>
+          <a href="#projects" class="block px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition">Projects</a>
+          <a href="#experience" class="block px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition">Experience</a>
+          <a href="#contact" class="block px-2 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 transition">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section id="hero" class="max-w-6xl mx-auto p-8 flex flex-col md:flex-row items-center gap-8">
-    <div class="flex-1">
-      <h1 class="text-4xl md:text-5xl font-bold">Jeremy Browne</h1>
-      <p class="mt-3 text-lg text-gray-700">Engineering with Management (Trinity College Dublin) — Designer, prototyper and entrepreneur. I specialise in CAD, 3D printing, renewable energy design and product development.</p>
+  <!-- HERO (redesigned) -->
+  <section id="hero" class="min-h-[90vh] flex items-center bg-gradient-to-r from-indigo-600 to-teal-400 text-white dark:from-gray-900 dark:to-gray-800">
+    <div class="max-w-6xl mx-auto px-6 md:px-8 w-full grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight font-heading">
+          <span class="block">Jeremy Browne</span>
+          <span id="typed" class="mt-2 block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-600 typing"></span>
+        </h1>
+        <p class="mt-4 text-lg text-white/90 max-w-prose">Engineering with Management (Trinity College Dublin). Designer, prototyper and entrepreneur focused on CAD, 3D printing, renewable energy and product development.</p>
 
-      <div class="mt-6 flex gap-3">
-        <a href="#projects" class="inline-block bg-blue-600 text-white px-4 py-2 rounded shadow-sm">See Projects</a>
-        <a href="#contact" class="inline-block border border-gray-300 px-4 py-2 rounded">Contact</a>
-        <a href="#photos" class="inline-block border border-gray-300 px-4 py-2 rounded">Photo Gallery</a>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#projects" class="inline-flex items-center bg-brand text-white px-5 py-3 rounded-xl shadow-sm hover:bg-brand-dark transition-transform duration-200 ease-out hover:scale-105">See Projects</a>
+          <a href="#contact" class="inline-flex items-center border border-white/40 text-white/90 px-5 py-3 rounded-xl hover:bg-white/10 transition-colors">Contact</a>
+          <a href="#photos" class="inline-flex items-center border border-white/40 text-white/90 px-5 py-3 rounded-xl hover:bg-white/10 transition-colors">Photo Gallery</a>
+        </div>
+
+        <div class="mt-6 flex items-center gap-4 text-gray-600">
+          <a aria-label="LinkedIn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer" class="hover:text-indigo-600 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.84v2.18h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.12V24h-4v-7.56c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.91 1.96-2.91 3.99V24h-4V8z"/></svg>
+          </a>
+          <a aria-label="X" href="https://x.com/" target="_blank" rel="noreferrer" class="hover:text-indigo-600 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.53 2H21l-7.5 8.57L22.5 22h-6.2l-4.85-6.21L5.9 22H2.43l8.2-9.38L1.8 2h6.3l4.37 5.72L17.53 2z"/></svg>
+          </a>
+          <a aria-label="Etsy" href="https://www.etsy.com/" target="_blank" rel="noreferrer" class="hover:text-indigo-600 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M3 3h18v18H3V3zm13.78 4.64h-4.37v3.04h4.1v1.26h-4.1v4.42h-1.76V6.38h6.13v1.26z"/></svg>
+          </a>
       </div>
 
       <div class="mt-6 text-sm text-gray-600">
@@ -45,95 +145,287 @@
       </div>
     </div>
 
-    <div class="w-full md:w-72 flex-shrink-0">
-      <!-- Replace this with a portrait image -->
-      <div class="rounded-2xl overflow-hidden shadow-lg">
-        <img src="images/portrait-placeholder.jpg" alt="Jeremy Browne" class="w-full h-72 object-cover">
+      <div class="justify-self-center md:justify-self-end">
+        <div class="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-white/20 animate-float">
+          <img src="images/portrait-placeholder.jpg" alt="Portrait of Jeremy Browne smiling, engineering student" class="w-56 h-56 md:w-72 md:h-72 object-cover rounded-xl" loading="lazy">
+          <div class="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-brand/30 shadow-[0_0_30px_5px_rgba(65,105,225,0.35)]"></div>
+        </div>
       </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="absolute inset-x-0 bottom-4 flex justify-center">
+      <a href="#about" class="inline-flex flex-col items-center text-xs text-gray-500 hover:text-gray-700 transition">
+        <span>Scroll</span>
+        <span class="mt-1 w-4 h-6 rounded-full border border-gray-300 relative overflow-hidden">
+          <span class="absolute left-1/2 -translate-x-1/2 top-1 w-1 h-1.5 rounded-full bg-gray-400 animate-scroll-dot"></span>
+        </span>
+      </a>
     </div>
   </section>
 
   <main class="max-w-6xl mx-auto p-8 space-y-12">
     <!-- ABOUT -->
-    <section id="about" class="bg-white p-6 rounded-2xl shadow-sm">
+    <section id="about" class="relative bg-white p-6 md:p-8 rounded-xl shadow-sm overflow-hidden" data-aos="fade-up" data-aos-duration="800">
+      <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500/50 via-fuchsia-500/40 to-pink-500/50"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+        <div class="order-2 md:order-1">
       <h2 class="text-2xl font-semibold">About</h2>
       <p class="mt-3 text-gray-700">I am an Engineering with Management student on a 5-year course at Trinity College Dublin. I would describe myself as enthusiastic, hardworking and sociable. I have a wide range of experiences, good work ethic and strong problem-solving ability. When I complete tasks, I will always try to do the best job I can.</p>
 
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <h3 class="font-medium">Education</h3>
-          <ul class="mt-2 text-sm text-gray-700">
+              <h3 class="font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-indigo-600"><path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"/></svg>
+                Education
+              </h3>
+              <ul class="mt-2 text-sm text-gray-700 space-y-1">
             <li><strong>Trinity College Dublin</strong> — Engineering with Management (2023–2028)</li>
             <li><strong>Institute of Education</strong> — Leaving Certificate (2020–2023)</li>
-            <li><strong>Catholic University School</strong></li>
+                <li><strong>Catholic University School</strong> — Junior Cert</li>
           </ul>
         </div>
         <div>
-          <h3 class="font-medium">Qualifications</h3>
+              <h3 class="font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-indigo-600"><path d="M5 4h14v2H5V4zm0 4h14v2H5V8zm0 4h9v2H5v-2zm0 4h9v2H5v-2z"/></svg>
+                Qualifications
+              </h3>
           <ul class="mt-2 text-sm text-gray-700 space-y-1">
             <li>Applied Mathematics H1 • Mathematics H1 • Physics H1 • Biology H1</li>
             <li>Computer Science H2 • Design & Communication Graphics H2 • Economics H2 • English H2</li>
           </ul>
         </div>
+          </div>
+        </div>
+
+        <div class="order-1 md:order-2 justify-self-center md:justify-self-end">
+          <div class="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-black/5">
+            <img src="images/portrait-placeholder.jpg" alt="Headshot of Jeremy Browne in profile" class="w-56 h-56 md:w-72 md:h-72 object-cover rounded-xl">
+            <div class="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-brand/20"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (dedicated section) -->
+    <section id="contact" class="bg-white p-8 md:p-12 rounded-xl shadow-sm text-center" data-aos="fade-up" data-aos-duration="800">
+      <h2 class="text-2xl font-semibold font-heading">Get in touch</h2>
+      <p class="mt-2 text-gray-600">I’m open to internships, collaborations, and interesting projects.</p>
+
+      <div class="mt-6 flex items-center justify-center gap-6">
+        <a aria-label="LinkedIn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"
+           class="text-gray-600 hover:text-brand transition transform hover:scale-110">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+            <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7 0h3.84v2.18h.06c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.12V24h-4v-7.56c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.91 1.96-2.91 3.99V24h-4V8z"/>
+          </svg>
+        </a>
+        <a aria-label="X" href="https://x.com/" target="_blank" rel="noreferrer"
+           class="text-gray-600 hover:text-brand transition transform hover:scale-110">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+            <path d="M17.53 2H21l-7.5 8.57L22.5 22h-6.2l-4.85-6.21L5.9 22H2.43l8.2-9.38L1.8 2h6.3l4.37 5.72L17.53 2z"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="mt-6">
+        <a href="#" class="inline-flex items-center gap-2 bg-brand text-white px-5 py-2.5 rounded-xl shadow-sm hover:bg-brand-dark transition">
+          Download CV
+        </a>
+      </div>
+
+      <div class="mt-6 text-sm text-gray-600">
+        <div>Email: <a href="mailto:Jeremy.browne.42@gmail.com" class="underline">Jeremy.browne.42@gmail.com</a></div>
+        <div>Phone: <a href="tel:+353872302947" class="underline">+353 87 230 2947</a></div>
       </div>
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="bg-white p-6 rounded-2xl shadow-sm">
-      <h2 class="text-2xl font-semibold">Skills Overview</h2>
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section id="skills" class="bg-white p-6 rounded-xl shadow-sm" data-aos="fade-right" data-aos-duration="800">
+      <h2 class="text-2xl font-semibold">Skills</h2>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Technical -->
         <div>
-          <h4 class="font-medium">Technical</h4>
-          <ul class="mt-2 text-sm text-gray-700 space-y-1">
-            <li>CAD: SolidWorks, Fusion 360</li>
-            <li>3D printing & traditional manufacturing</li>
-            <li>Arduino, electronics prototyping</li>
-            <li>MATLAB, Python (intermediate)</li>
-            <li>PowerBI, Microsoft Office</li>
-          </ul>
+          <h4 class="font-medium text-gray-900">Technical</h4>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- SolidWorks icon substitute: gear -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm8.94-2.72l-1.66-.96c.06-.39.06-.8 0-1.19l1.66-.96a.5.5 0 0 0 .2-.68l-1.9-3.29a.5.5 0 0 0-.65-.2l-1.66.96c-.32-.28-.67-.52-1.05-.72V2.5a.5.5 0 0 0-.5-.5h-3.8a.5.5 0 0 0-.5.5v1.94c-.38.2-.73.44-1.05.72l-1.66-.96a.5.5 0 0 0-.68.2L2.87 7.7a.5.5 0 0 0 .2.68l1.66.96c-.06.39-.06.8 0 1.19l-1.66.96a.5.5 0 0 0-.2.68l1.9 3.29c.14.24.44.33.68.2l1.66-.96c.32.28.67.52 1.05.72V21.5a.5.5 0 0 0 .5.5h3.8a.5.5 0 0 0 .5-.5v-1.94c.38-.2.73-.44 1.05-.72l1.66.96c.24.14.53.05.67-.2l1.91-3.29a.5.5 0 0 0-.2-.68z"/></svg>
+              SolidWorks
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition"> 
+              <!-- Fusion 360 icon substitute: cube -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.18L5 7.5v9l7 3.88 7-3.88v-9l-7-3.32zM11 8h2v8h-2V8zm-4 2h2v6H7v-6zm8 0h2v6h-2v-6z"/></svg>
+              Fusion 360
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- 3D printing icon: printer -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M7 2h10v4h3a2 2 0 0 1 2 2v8h-3v4H5v-4H2V8a2 2 0 0 1 2-2h3V2zm2 0v4h6V2H9zm8 16v-3H7v3h10zm3-5V8H4v5h16z"/></svg>
+              3D Printing
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Arduino icon: infinity-like -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M7.5 8C5 8 3 10 3 12.5S5 17 7.5 17c2.2 0 3.5-1.4 4.5-2.5 1 1.1 2.3 2.5 4.5 2.5 2.5 0 4.5-2 4.5-4.5S19 8 16.5 8c-2.2 0-3.5 1.4-4.5 2.5C11 9.4 9.7 8 7.5 8zm0 2c1.6 0 2.6 1.1 3.7 2.5-1.1 1.4-2.1 2.5-3.7 2.5C6.1 15 5 13.9 5 12.5S6.1 10 7.5 10zm9 0c1.4 0 2.5 1.1 2.5 2.5S17.9 15 16.5 15c-1.6 0-2.6-1.1-3.7-2.5 1.1-1.4 2.1-2.5 3.7-2.5zM7 12h3v1H7v-1zm10 0h-3v1h3v-1z"/></svg>
+              Arduino
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Python icon: two snakes simplified -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M12 2c3 0 5 1.5 5 4v3H7c-2.2 0-4 1.8-4 4v2c0 2.2 1.8 4 4 4h2v-3H9c-1.1 0-2-.9-2-2v-1c0-1.1.9-2 2-2h10V6c0-2.2-2.2-4-5-4h-2zm-1 18c-3 0-5-1.5-5-4v-3h10c2.2 0 4 1.8 4 4v2c0 2.2-1.8 4-4 4h-2v-3h1c1.1 0 2-.9 2-2v-1c0-1.1-.9-2-2-2H6v3c0 2.2 2.2 4 5 4h2z"/></svg>
+              Python
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- MATLAB icon: wave -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M3 16l4-2 4 3 4-6 6 7H3z"/></svg>
+              MATLAB
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Power BI icon: bars -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M3 18h2V8H3v10zm4 0h3V6H7v12zm5 0h3V10h-3v8zm5 0h3V4h-3v14z"/></svg>
+              Power BI
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Office icon: squares -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M3 3h8v8H3V3zm10 0h8v5h-8V3zM3 13h5v8H3v-8zm7 4h11v4H10v-4z"/></svg>
+              Microsoft Office
+            </span>
+          </div>
         </div>
+
+        <!-- Business & Soft Skills -->
         <div>
-          <h4 class="font-medium">Business & Soft Skills</h4>
-          <ul class="mt-2 text-sm text-gray-700 space-y-1">
-            <li>Product creation, customer research & engagement</li>
-            <li>Pitching, public speaking, leadership</li>
-            <li>Online marketing & website development</li>
-            <li>Stakeholder engagement and team management</li>
-          </ul>
+          <h4 class="font-medium text-gray-900">Business & Soft Skills</h4>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Product icon: box -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M12 2l9 4-9 4-9-4 9-4zm-9 6l9 4v10l-9-4V8zm11 14V12l9-4v10l-9 4z"/></svg>
+              Product Creation
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Research icon: magnifier -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              Customer Research
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Speaker icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a2.5 2.5 0 0 0-1.5-2.31v4.62c.9-.36 1.5-1.24 1.5-2.31zm-1.5-7.97v2.09c2.89.86 5 3.54 5 6.88s-2.11 6.02-5 6.88v2.09c4.01-.93 7-4.52 7-8.97s-2.99-8.04-7-8.97z"/></svg>
+              Public Speaking
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Leadership icon: flag -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M4 4h2v16H4V4zm4 0h10l-2 3 2 3H8V4z"/></svg>
+              Leadership
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Marketing icon: share -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.02-4.11A2.99 2.99 0 1 0 14 5a2.99 2.99 0 0 0 .09.7L7.07 9.81a3 3 0 1 0 0 4.38l7.02 4.11c-.05.22-.09.45-.09.7a3 3 0 1 0 3-3.62z"/></svg>
+              Online Marketing
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Stakeholders icon: users -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V20h14v-3.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V20h6v-3.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              Stakeholder Engagement
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm hover:bg-gray-200 transition">
+              <!-- Team icon: group -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-gray-700"><path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              Team Management
+            </span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- EXPERIENCE & PROJECTS -->
-    <section id="experience" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Internship -->
-      <article class="col-span-1 lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm">
-        <h2 class="text-2xl font-semibold">Experience & Projects</h2>
+    <section id="experience" class="grid grid-cols-1 lg:grid-cols-3 gap-6" data-aos="fade-up" data-aos-duration="800">
+      <!-- Cards grid -->
+      <article class="col-span-1 lg:col-span-2 bg-white p-6 rounded-xl shadow-sm">
+        <h2 class="text-2xl font-semibold font-heading">Experience & Projects</h2>
 
-        <div class="mt-4 space-y-4">
-          <div>
-            <h3 class="font-medium">Eirgrid — Customers & Connections (Internship)</h3>
-            <p class="text-sm text-gray-700 mt-1">Summer internship (3 months). Placed in Customers & Connections department: worked with stakeholder engagement (e.g. Amazon, Microsoft, Meta), used Microsoft Office and PowerBI, researched offshore policy and supported contract/connection processes.</p>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 3D Printing Business -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">3D Printing Online Business</h3>
+              <span class="inline-flex items-center rounded-full bg-brand/10 text-brand text-xs px-2 py-0.5">2024</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">Co-run an ecommerce store producing high-detail 3D printed items. Designed CAD, integrated electronics and managed international shipping. ≈ €30k revenue from 500+ customers; viral marketing reached ~10M views.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">CAD</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">3D Printing</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Ecommerce</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Electronics</span>
+            </div>
+            <div class="mt-3">
+              <a href="#projects" class="text-sm text-indigo-700 hover:underline">Learn More →</a>
+            </div>
           </div>
 
-          <div>
-            <h3 class="font-medium">Trinity Floating Wind — Co-founder & Chief Design Engineer</h3>
-            <p class="text-sm text-gray-700 mt-1">Co-founded Ireland's first renewable energy student team. Developed a design to disconnect wave motion from the tower and led design & prototyping. Awarded 1st place in an international competition for power generation efficiency. Raised sponsorship from ESB and Eirgrid.</p>
+          <!-- Trinity Floating Wind -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">Trinity Floating Wind — Co-founder & Chief Design Engineer</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5">Competition Winner</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">Co-founded Ireland's first renewable energy student team. Developed a design to disconnect wave motion from the tower, led design & prototyping, raised sponsorship from ESB and Eirgrid.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Renewables</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Prototyping</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Leadership</span>
+            </div>
           </div>
 
-          <div>
-            <h3 class="font-medium">SailDrone Racing</h3>
-            <p class="text-sm text-gray-700 mt-1">2nd place — Yachting Monthly International Challenge Cup; 3rd place — British Open National A class. Designed and fabricated a novel composite keel with a 4-fin design, collaborated with marine & aerospace engineers.</p>
+          <!-- SailDrone Racing -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">SailDrone Racing</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5">Podiums</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">2nd — Yachting Monthly International Challenge Cup; 3rd — British Open National A class. Designed a novel composite keel with a 4-fin design, collaborated with marine & aerospace engineers.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Composites</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Hydrodynamics</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Collaboration</span>
+            </div>
           </div>
 
-          <div>
-            <h3 class="font-medium">3D Printing Online Business</h3>
-            <p class="text-sm text-gray-700 mt-1">Co-run an ecommerce store producing high-detail 3D printed items. Designed CAD files, integrated electronics (LEDs, wireless charging), managed international shipping. 2024 revenue ≈ €30k from 500+ customers; consistent 4.5–5 star ratings. Viral short-form marketing reached ~10M views in a week.</p>
+          <!-- EirGrid Internship -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">Eirgrid — Customers & Connections (Internship)</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5">Summer • 3 months</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">Worked on stakeholder engagement (Amazon, Microsoft, Meta), used Microsoft Office and PowerBI, researched offshore policy and supported contract/connection processes.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">PowerBI</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Stakeholders</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Policy Research</span>
+            </div>
           </div>
 
-          <div>
-            <h3 class="font-medium">Model United Nations & LaunchBox</h3>
-            <p class="text-sm text-gray-700 mt-1">Best Delegate (Economics & Finance) at Ireland's largest MUN conference. 2nd place in Trinity Business School LaunchBox (SpikeSpy) startup competition.</p>
+          <!-- LaunchBox -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">Trinity Business School LaunchBox</h3>
+              <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5">2nd Place</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">2nd place in the LaunchBox startup competition, Trinity's premier accelerator, with SpikeSpy passive drug detection straw for drinks to help prevent spiking.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Startup</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Prototype</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Pitching</span>
+            </div>
+          </div>
+
+          <!-- Model UN -->
+          <div class="group rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:ring-1 hover:ring-brand/30 hover:bg-brand/5">
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-semibold">Model United Nations</h3>
+              <span class="inline-flex items-center rounded-full bg-brand/10 text-brand text-xs px-2 py-0.5">Best Delegate</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-700">Best Delegate (Economics & Finance) at Ireland's largest MUN conference.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Debate</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Policy</span>
+              <span class="text-xs bg-gray-100 px-2 py-1 rounded">Leadership</span>
+            </div>
           </div>
         </div>
       </article>
@@ -150,53 +442,136 @@
     </section>
 
     <!-- PROJECT GALLERY -->
-    <section id="projects" class="bg-white p-6 rounded-2xl shadow-sm">
+    <section id="projects" class="bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-duration="800">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-semibold">Projects & Photo Gallery</h2>
         <p class="text-sm text-gray-600">Click any image to enlarge</p>
       </div>
 
-      <!-- FILTERS (optional) -->
-      <div class="mt-4 flex flex-wrap gap-2 text-sm">
-        <button class="px-3 py-1 rounded bg-gray-100">All</button>
-        <button class="px-3 py-1 rounded bg-gray-100">Trinity Floating Wind</button>
-        <button class="px-3 py-1 rounded bg-gray-100">3D Printing</button>
-        <button class="px-3 py-1 rounded bg-gray-100">SailDrone</button>
-        <button class="px-3 py-1 rounded bg-gray-100">Internship</button>
+      <!-- FILTERS -->
+      <div class="mt-4 flex flex-wrap gap-2 text-sm" id="gallery-filters">
+        <button class="px-3 py-1 rounded bg-gray-900 text-white" data-filter="all">All</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="Trinity Floating Wind">Trinity Floating Wind</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="3D Printing">3D Printing</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="SailDrone">SailDrone</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="Internship">Internship</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="LaunchBox">LaunchBox</button>
+        <button class="px-3 py-1 rounded bg-gray-100" data-filter="Model UN">Model UN</button>
       </div>
 
       <!-- Gallery grid -->
       <div id="photos" class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <!-- Replace these src paths with your project images (images/project-1.jpg etc) -->
-        <button class="group overflow-hidden rounded-xl p-0 bg-white shadow" onclick="openModal('images/project-1.jpg','Trinity Floating Wind — Prototype')">
-          <img src="images/project-1-thumb.jpg" alt="Project 1" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+        <!-- Gallery items; use data attributes for JS filtering and modal navigation -->
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Trinity Floating Wind" data-src="images/project-1.jpg" data-title="Trinity Floating Wind — Prototype">
+          <img src="images/project-1-thumb.jpg" alt="Trinity Floating Wind prototype thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200" loading="lazy">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Trinity Floating Wind — Prototype</div>
         </button>
 
-        <button class="group overflow-hidden rounded-xl p-0 bg-white shadow" onclick="openModal('images/project-2.jpg','3D Printed Product — Retail')">
-          <img src="images/project-2-thumb.jpg" alt="Project 2" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="3D Printing" data-src="images/project-2.jpg" data-title="3D Printed Product — Retail">
+          <img src="images/project-2-thumb.jpg" alt="3D printed retail product thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200" loading="lazy">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">3D Printed Product — Retail</div>
         </button>
 
-        <button class="group overflow-hidden rounded-xl p-0 bg-white shadow" onclick="openModal('images/project-3.jpg','SailDrone — Racing Keel')">
-          <img src="images/project-3-thumb.jpg" alt="Project 3" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="SailDrone" data-src="images/project-3.jpg" data-title="SailDrone — Racing Keel">
+          <img src="images/project-3-thumb.jpg" alt="SailDrone racing keel thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200" loading="lazy">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">SailDrone — Racing Keel</div>
         </button>
 
-        <button class="group overflow-hidden rounded-xl p-0 bg-white shadow" onclick="openModal('images/project-4.jpg','Internship — Eirgrid')">
-          <img src="images/project-4-thumb.jpg" alt="Project 4" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Internship" data-src="images/project-4.jpg" data-title="Internship — Eirgrid">
+          <img src="images/project-4-thumb.jpg" alt="Eirgrid internship thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200" loading="lazy">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Internship — Eirgrid</div>
         </button>
 
-        <!-- Add more images as needed -->
+        <!-- Additional images -->
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Trinity Floating Wind" data-src="images/project-5.jpg" data-title="Trinity Floating Wind — Tank Test">
+          <img src="images/project-5-thumb.jpg" alt="Trinity Floating Wind tank test thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Trinity Floating Wind — Tank Test</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="3D Printing" data-src="images/project-6.jpg" data-title="3D Printing — Product Detail">
+          <img src="images/project-6-thumb.jpg" alt="3D printing product detail thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">3D Printing — Product Detail</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="SailDrone" data-src="images/project-7.jpg" data-title="SailDrone — Assembly">
+          <img src="images/project-7-thumb.jpg" alt="SailDrone assembly thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">SailDrone — Assembly</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Internship" data-src="images/project-8.jpg" data-title="Internship — Site Visit">
+          <img src="images/project-8-thumb.jpg" alt="Eirgrid site visit thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Internship — Site Visit</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Trinity Floating Wind" data-src="images/project-9.jpg" data-title="Trinity Floating Wind — CAD">
+          <img src="images/project-9-thumb.jpg" alt="Trinity Floating Wind CAD thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Trinity Floating Wind — CAD</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="3D Printing" data-src="images/project-10.jpg" data-title="3D Printing — Electronics Integration">
+          <img src="images/project-10-thumb.jpg" alt="3D printing electronics integration thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">3D Printing — Electronics Integration</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="SailDrone" data-src="images/project-11.jpg" data-title="SailDrone — On-Water Test">
+          <img src="images/project-11-thumb.jpg" alt="SailDrone on-water test thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">SailDrone — On-Water Test</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="LaunchBox" data-src="images/project-12.jpg" data-title="LaunchBox — Demo Day">
+          <img src="images/project-12-thumb.jpg" alt="LaunchBox demo day thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">LaunchBox — Demo Day</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Model UN" data-src="images/project-13.jpg" data-title="Model UN — Committee Session">
+          <img src="images/project-13-thumb.jpg" alt="Model UN committee session thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Model UN — Committee Session</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="3D Printing" data-src="images/project-14.jpg" data-title="3D Printing — Packaging & Shipping">
+          <img src="images/project-14-thumb.jpg" alt="3D printing packaging and shipping thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">3D Printing — Packaging & Shipping</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Trinity Floating Wind" data-src="images/project-15.jpg" data-title="Trinity Floating Wind — Team">
+          <img src="images/project-15-thumb.jpg" alt="Trinity Floating Wind team thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Trinity Floating Wind — Team</div>
+        </button>
+
+        <button class="group relative overflow-hidden rounded-xl p-0 bg-white shadow" data-category="Internship" data-src="images/project-16.jpg" data-title="Internship — Presentation">
+          <img src="images/project-16-thumb.jpg" alt="Internship presentation thumbnail" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-200">
+          <div class="pointer-events-none absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 p-2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity">Internship — Presentation</div>
+        </button>
       </div>
 
       <!-- LIGHTBOX / MODAL -->
       <div id="modal" class="fixed inset-0 hidden items-center justify-center modal-bg z-50">
-        <div class="max-w-4xl mx-auto p-4">
-          <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+        <div class="max-w-5xl mx-auto p-4 w-full">
+          <div class="relative bg-white rounded-xl overflow-hidden shadow-lg">
             <div class="flex justify-between items-center p-3 border-b">
               <div id="modal-title" class="font-medium">Title</div>
               <button onclick="closeModal()" class="text-lg px-3">✕</button>
             </div>
-            <div class="p-4">
+            <div class="relative p-4 flex items-center justify-center">
+              <button id="prev-btn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-9 h-9 rounded-full grid place-items-center hover:bg-black/60">‹</button>
               <img id="modal-img" src="" alt="" class="w-full h-auto max-h-[70vh] object-contain">
+              <button id="next-btn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-9 h-9 rounded-full grid place-items-center hover:bg-black/60">›</button>
             </div>
           </div>
         </div>
@@ -210,13 +585,33 @@
     </footer>
   </main>
 
+  <!-- Theme + Scroll-to-top buttons -->
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+    <button id="theme-toggle" aria-label="Toggle dark mode" class="w-11 h-11 rounded-full bg-white/90 text-gray-800 shadow-lg grid place-items-center hover:text-brand transition dark:bg-gray-800 dark:text-gray-100">🌙</button>
+    <button id="back-to-top" aria-label="Back to top" class="w-11 h-11 rounded-full bg-brand text-white shadow-lg grid place-items-center opacity-0 pointer-events-none transition hover:bg-brand-dark">↑</button>
+  </div>
+
   <script>
     // Simple modal functions for the gallery
-    function openModal(src, title) {
-      document.getElementById('modal-img').src = src;
-      document.getElementById('modal-title').textContent = title || '';
-      document.getElementById('modal').classList.remove('hidden');
-      document.getElementById('modal').classList.add('flex');
+    var galleryItems = [];
+    var currentIndex = -1;
+
+    function openModalByIndex(index) {
+      if (index < 0 || index >= galleryItems.length) return;
+      currentIndex = index;
+      var item = galleryItems[currentIndex];
+      var img = document.getElementById('modal-img');
+      img.src = item.src;
+      img.alt = (item.title || 'Project image') + ' large view';
+      document.getElementById('modal-title').textContent = item.title || '';
+      var modal = document.getElementById('modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function openModal(src, title) { // backward compatibility
+      var index = galleryItems.findIndex(function(i){ return i.src === src; });
+      if (index === -1) { index = 0; }
+      openModalByIndex(index);
     }
     function closeModal() {
       document.getElementById('modal-img').src = '';
@@ -228,6 +623,168 @@
     document.getElementById('modal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
+
+    // Build gallery data and click behavior
+    (function(){
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('#photos > button'));
+      galleryItems = buttons.map(function(btn, idx){
+        return { el: btn, src: btn.getAttribute('data-src'), title: btn.getAttribute('data-title'), category: btn.getAttribute('data-category') || 'all' };
+      });
+      buttons.forEach(function(btn, idx){
+        btn.addEventListener('click', function(){ openModalByIndex(idx); });
+      });
+      var prev = document.getElementById('prev-btn');
+      var next = document.getElementById('next-btn');
+      prev && prev.addEventListener('click', function(e){ e.stopPropagation(); openModalByIndex((currentIndex - 1 + galleryItems.length) % galleryItems.length); });
+      next && next.addEventListener('click', function(e){ e.stopPropagation(); openModalByIndex((currentIndex + 1) % galleryItems.length); });
+    })();
+
+    // Filters
+    (function(){
+      var filterBar = document.getElementById('gallery-filters');
+      if (!filterBar) return;
+      var buttons = Array.prototype.slice.call(filterBar.querySelectorAll('button'));
+      var items = Array.prototype.slice.call(document.querySelectorAll('#photos > button'));
+      function setActive(btn){
+        buttons.forEach(function(b){ b.classList.remove('bg-gray-900','text-white'); b.classList.add('bg-gray-100'); });
+        btn.classList.add('bg-gray-900','text-white');
+        btn.classList.remove('bg-gray-100');
+      }
+      buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          setActive(btn);
+          var f = btn.getAttribute('data-filter');
+          items.forEach(function(it){
+            var cat = it.getAttribute('data-category');
+            var show = (f === 'all') || (cat === f);
+            it.style.display = show ? '' : 'none';
+          });
+        });
+      });
+    })();
+
+    // Initialize AOS animations
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://unpkg.com/aos@2.3.4/dist/aos.js';
+      script.onload = function () { if (window.AOS) { window.AOS.init({ once: true, offset: 80 }); } };
+      document.body.appendChild(script);
+    })();
+
+    // Theme toggle with localStorage + system preference
+    (function(){
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      function applyTheme(theme){ if(theme==='dark'){ root.classList.add('dark'); } else { root.classList.remove('dark'); } }
+      var stored = localStorage.getItem('theme');
+      if (stored) {
+        applyTheme(stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      }
+      btn && btn.addEventListener('click', function(){
+        var isDark = root.classList.contains('dark');
+        applyTheme(isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      });
+    })();
+
+    // Header scroll behavior and mobile menu
+    (function() {
+      var header = document.getElementById('site-header');
+      var toggle = document.getElementById('nav-toggle');
+      var mobile = document.getElementById('mobile-menu');
+      var iconOpen = document.getElementById('icon-open');
+      var iconClose = document.getElementById('icon-close');
+
+      function onScroll() {
+        if (window.scrollY > 8) {
+          header.classList.remove('header-transparent');
+          header.classList.add('header-solid');
+        } else {
+          header.classList.add('header-transparent');
+          header.classList.remove('header-solid');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    // Back to top button
+    (function(){
+      var btn = document.getElementById('back-to-top');
+      function onScrollBtt() {
+        if (window.scrollY > 600) {
+          btn.classList.remove('opacity-0','pointer-events-none');
+        } else {
+          btn.classList.add('opacity-0','pointer-events-none');
+        }
+      }
+      window.addEventListener('scroll', onScrollBtt, { passive: true });
+      onScrollBtt();
+      btn.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+
+      function setMenu(open) {
+        toggle.setAttribute('aria-expanded', String(open));
+        if (open) {
+          mobile.style.maxHeight = mobile.scrollHeight + 'px';
+          mobile.style.opacity = '1';
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+        } else {
+          mobile.style.maxHeight = '0px';
+          mobile.style.opacity = '0';
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      }
+      var isOpen = false;
+      toggle && toggle.addEventListener('click', function() {
+        isOpen = !isOpen; setMenu(isOpen);
+      });
+
+      // Close on nav click
+      if (mobile) {
+        mobile.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ isOpen = false; setMenu(false); }); });
+      }
+    })();
+
+    // Simple typing/fade effect for the headline
+    (function() {
+      const phrases = [
+        'Engineering with Management @ Trinity',
+        'CAD • 3D Printing • Renewable Energy',
+        'Designing and Prototyping Products'
+      ];
+      const el = document.getElementById('typed');
+      if (!el) return;
+      let i = 0;
+      let char = 0;
+      let deleting = false;
+
+      function tick() {
+        const current = phrases[i];
+        if (!deleting) {
+          char++;
+          el.textContent = current.slice(0, char);
+          if (char === current.length) {
+            deleting = true;
+            setTimeout(tick, 1200);
+            return;
+          }
+        } else {
+          char--;
+          el.textContent = current.slice(0, char);
+          if (char === 0) {
+            deleting = false;
+            i = (i + 1) % phrases.length;
+          }
+        }
+        const delay = deleting ? 45 : 70;
+        setTimeout(tick, delay);
+      }
+      tick();
+    })();
   </script>
 </body>
 </html>
+
